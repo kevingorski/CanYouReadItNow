@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<title>Jasmine Test Runner</title>
+	<link rel="stylesheet" type="text/css" href="lib/jasmine/jasmine.css">
+	<script type="text/javascript" src="lib/jasmine/jasmine.js"></script>
+	<script type="text/javascript" src="lib/jasmine/jasmine-html.js"></script>
+
+	<!-- include source files here... -->
+	<script type="text/javascript" src="lib/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="lib/modernizr-1.6.min.js"></script>
+	<script type="text/javascript" src="CYRIN.js"></script>
+	
+	<style type="text/css" media="screen">
+		body, p {
+			font-family: "Lucida Grande", "Calibri", "Arial", sans-serif;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="testTarget" style="text-align: left; width: 1360px;">
+		<p style="font-size:8pt;">Text</p>
+		<p style="line-height: 21px; font-size: 12pt; color: black; letter-spacing: 3px; background: white url(images/pixel.gif); margin: 10px; padding: 4px; font-family: 'Times New Roman', serif;"><strong>123456789</strong> 123456789 123456789 123456789 123456789 123456789 123456789 123456789 </p>
+		<p style="font-size:150%; -moz-column-count: 2; -moz-column-gap: 14px; -webkit-column-count: 2; -webkit-column-gap: 14px; column-count: 2; column-gap: 14px; width:600px">A23456789 B23456789 C23456789 D23456789 E23456789 F23456789 G23456789 H23456789 </p>
+	</div>
+	
+	<script type="text/javascript" src="CYRIN.spec.js"></script>
+	<script type="text/javascript">
+		jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+		jasmine.getEnv().execute();
+	</script>
+</body>
+</html>
