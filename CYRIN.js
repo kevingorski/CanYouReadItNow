@@ -407,12 +407,13 @@
 		};
 
 		function decorateTreeWithMeasurements(textTreeNode, defaultBackgroundColor) {
+			var target = $(textTreeNode.DOMNode),
+				backgroundColor = standardizeColor(target.css('background-color')) || defaultBackgroundColor;
+
 			if(textTreeNode.textChildren) {
 				var textLength = 0,
-					target = $(textTreeNode.DOMNode),
 					clone = target.clone(),
 
-					backgroundColor = standardizeColor(target.css('background-color')) || defaultBackgroundColor,
 					fontSize,
 					lineHeight = target.css('line-height'),
 					lineLength,
@@ -459,9 +460,9 @@
 				textTreeNode.addMetric(constants.CHARACTERS_PER_LINE, lineLength / clone.width());
 
 				clone.remove();
-
-				defaultBackgroundColor = backgroundColor;
 			}
+			
+			if(backgroundColor) defaultBackgroundColor = backgroundColor;
 
 			if(textTreeNode.textTreeChildren)
 				$.each(textTreeNode.textTreeChildren, function() {
@@ -542,8 +543,8 @@
 
 			var marginAndPadding = textTreeNode.getMetric(constants.MARGIN_AND_PADDING),
 				fontSize = textTreeNode.getMetric(constants.FONT_SIZE),
-				fontSizeInPixels = getPixelsFromFontSize(marginAndPadding),
-				score = 10 * (Math.min(marginAndPadding, fontSizeInPixels) / fontSizeInPixels);
+				fontSizeInPixels = getPixelsFromFontSize(fontSize),
+				score = Math.min(10, 10 * marginAndPadding / fontSizeInPixels);
 
 			analysis.addScore(constants.MARGIN_AND_PADDING, score);
 		};
@@ -585,7 +586,7 @@
 			return analysis;
 		}		
 
-		if(!(plugin.el && plugin.el.length)) return 'Provide a target to analyze.';
+		if(!(plugin.el && plugin.el.length && plugin.$el)) return 'Provide a target to analyze.';
 
 		if(!jQuery.contains(plugin.el, plugin.options.context)) return 'Target doesn\'t appear to be in the DOM.';
 
@@ -603,14 +604,15 @@
 			if(!(defaultBackgroundColor = standardizeColor(currentTarget.css('background-color')))) {
 				// Find a background color on a parent node, or white by default
 				var backgroundTarget = currentTarget;
-
+			
 				while(backgroundTarget 
-					&& !(defaultBackgroundColor = backgroundTarget.css('background-color'))){
+					&& backgroundTarget[0] !== document
+					&& !(defaultBackgroundColor = standardizeColor(backgroundTarget.css('background-color')))){
 					backgroundTarget = backgroundTarget.parent();
 				}
 
 				// In this specific case transparent/rgba(0,0,0,0) probably means white
-				defaultBackgroundColor = standardizeColor(defaultBackgroundColor) || '#ffffff';
+				defaultBackgroundColor = defaultBackgroundColor || '#ffffff';
 			}
 
 			decorateTreeWithMeasurements(textTree, defaultBackgroundColor);

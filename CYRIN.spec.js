@@ -31,7 +31,7 @@ describe('CYRIN', function() {
 			var target = jQuery('p');
 			
 			expect(target.CYRIN().children.length).toEqual(target.length);
-		})
+		});
 	});
 	
 	
@@ -109,48 +109,48 @@ describe('CYRIN', function() {
 	describe('Scores', function() {
 		var getScore = function(name, alternateSelector) {
 			var actual = context.find(alternateSelector || "p:eq(1)").CYRIN();
-
+	
 			expect(actual.aggregateScores).toBeDefined();
-
+	
 			var score = jQuery.grep(actual.aggregateScores,
 				function(item) { return item.name === name; })[0];
-
+	
 			return score.value;
 		};
-
+	
 		it('scores left justification a 10', function() {
 			expect(getScore(jQuery.CYRIN.JUSTIFICATION)).toEqual(10);
 		});
-
+	
 		it('scores 80 characters of text a 9.9', function() {
 			expect(getScore(jQuery.CYRIN.LINE_LENGTH)).toEqual(9.9);
 		});
-
+	
 		it('scores appropriate line leading a 10', function() {
 			expect(getScore(jQuery.CYRIN.LINE_LEADING)).toEqual(10);
 		});
-
+	
 		it('scores black text on a white background a 10', function() {
 			expect(getScore(jQuery.CYRIN.TEXT_COLOR_CONTRAST)).toEqual(10);
 		});
-
+	
 		// TODO: Double-check
 		it('scores 11% of text stylized an 8.9', function() {
 			expect(getScore(jQuery.CYRIN.PERCENTAGE_OF_TEXT_STYLIZED)).toEqual(8.9);
 		});
-
+	
 		it('scores 12pt text a 10', function() {
 			expect(getScore(jQuery.CYRIN.FONT_SIZE)).toEqual(10);
 		});
-
+	
 		it('scores 8pt text less than 10', function() {
 			// Having an exact number here requires knowing the local screen DPI
 			expect(getScore(jQuery.CYRIN.FONT_SIZE, 'p:eq(0)')).toBeLessThan(10);
 		});
-
+	
 		// TODO: Double-check
-		it('scores 14 pixel margin + padding text 9.9', function() {
-			expect(getScore(jQuery.CYRIN.MARGIN_AND_PADDING)).toEqual(9.9);
+		it('scores 14 pixel margin + padding text 8.6', function() {
+			expect(getScore(jQuery.CYRIN.MARGIN_AND_PADDING)).toEqual(8.6);
 		});
-	})
+	});
 });
