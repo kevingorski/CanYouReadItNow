@@ -104,6 +104,10 @@ describe('CYRIN', function() {
 		it('returns the strong tag is stylized', function() {
 			expect(getMetric(jQuery.CYRIN.STYLIZED_TEXT, 'strong')).toBeTruthy();
 		});
+		
+		it('returns an effective margin & padding that takes parent margin into account', function() {
+			expect(getMetric(jQuery.CYRIN.EFFECTIVE_MARGIN_AND_PADDING, '#effectiveMPTarget p')).toEqual(20);
+		});
 	});
 	
 	describe('Scores', function() {

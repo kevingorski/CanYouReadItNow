@@ -5,6 +5,7 @@
 			BACKGROUND_IMAGE : 'Background Image',
 			BLOCK_ELEMENT : 'Block Element',
 			CHARACTERS_PER_LINE : 'Characters Per Line',
+			EFFECTIVE_MARGIN_AND_PADDING : 'Effective Margin &amp; Padding',
 			FONT_FAMILIES : 'Font Families',
 			FONT_SIZE : 'Font Size',
 			JUSTIFICATION : 'Justification',
@@ -54,7 +55,9 @@
 	}
 
 	TextTreeNode.prototype.getMetric = function(name) {
-		return $.grep(this.metrics, function(item) { return item.name === name; })[0].value;
+		var metricArray = $.grep(this.metrics, function(item) { return item.name === name; });
+		
+		return metricArray && metricArray.length ? metricArray[0].value : false;
 	}
 
 	TextTreeNode.prototype.updateMetric = function(name, value) {
@@ -406,7 +409,7 @@
 			return new TextTreeNode(node, childTextTreeNodes, childTextNodes);
 		};
 
-		function decorateTreeWithMeasurements(textTreeNode, defaultBackgroundColor) {
+		function decorateTreeWithMeasurements(textTreeNode, defaultBackgroundColor, parentTreeNode) {
 			var target = $(textTreeNode.DOMNode),
 				backgroundColor = standardizeColor(target.css('background-color')) || defaultBackgroundColor;
 
@@ -414,10 +417,12 @@
 				var textLength = 0,
 					clone = target.clone(),
 
+					blockElement = !!(target.css('display').match(/block/i)),
 					fontSize,
 					lineHeight = target.css('line-height'),
 					lineLength,
 					margin,
+					marginAndPadding,
 					padding,
 					textColor;
 
@@ -429,7 +434,7 @@
 				textTreeNode
 					.addMetric(constants.BACKGROUND_COLOR,	backgroundColor)
 					.addMetric(constants.BACKGROUND_IMAGE,	target.css('background-image'))
-					.addMetric(constants.BLOCK_ELEMENT,		!!(target.css('display').match(/block/i)))
+					.addMetric(constants.BLOCK_ELEMENT,		blockElement)
 					.addMetric(constants.FONT_FAMILIES,		target.css('font-family'))
 					.addMetric(constants.FONT_SIZE,			fontSize = target.css('font-size'))
 					.addMetric(constants.JUSTIFICATION,		target.css('text-align'))
@@ -441,7 +446,6 @@
 					.addMetric(constants.LINE_LENGTH,		lineLength = roundToTenth(getTextWidth(target)))
 					.addMetric(constants.MARGIN,			margin = target.css('margin-left') || 0)
 					.addMetric(constants.PADDING,			padding = target.css('padding-left') || 0)
-					.addMetric(constants.MARGIN_AND_PADDING,getPixelsFromFontSize(margin) + getPixelsFromFontSize(padding))
 					.addMetric(constants.STYLIZED_TEXT,
 						isContentBold(target)
 							|| target.css('font-style') === 'italic'
@@ -451,6 +455,23 @@
 						roundToTenth(calculateContrastRatio(backgroundColor, textColor)))
 					.addMetric(constants.TEXT_LENGTH,		textLength);
 
+				// If the margin is 'auto', will need special handling to find the spacing
+				if(margin === 'auto' && blockElement) {
+					margin = (target.outerWidth(true) - target.outerWidth())/2;
+				}
+				
+				textTreeNode
+					.addMetric(constants.MARGIN_AND_PADDING,
+						marginAndPadding = getPixelsFromFontSize(margin) + getPixelsFromFontSize(padding))
+
+				// If the parent appearas contiguous with this element,
+				// add it's effective M&P to the current M&P
+				textTreeNode.addMetric(constants.EFFECTIVE_MARGIN_AND_PADDING,
+					(parentTreeNode
+						&& backgroundColor === parentTreeNode.getMetric(constants.BACKGROUND_COLOR))
+						? marginAndPadding + (parentTreeNode.getMetric(constants.EFFECTIVE_MARGIN_AND_PADDING) || 0)
+						: marginAndPadding);
+				
 				clone.html('M');
 				clone.css({
 						display : 'inline',
@@ -466,7 +487,7 @@
 
 			if(textTreeNode.textTreeChildren)
 				$.each(textTreeNode.textTreeChildren, function() {
-					decorateTreeWithMeasurements(this, defaultBackgroundColor);
+					decorateTreeWithMeasurements(this, defaultBackgroundColor, textTreeNode);
 				});
 		};
 
@@ -541,7 +562,11 @@
 		function analyzeMarginAndPadding(textTreeNode, analysis) {
 			if(!textTreeNode.getMetric(constants.BLOCK_ELEMENT)) return;
 
-			var marginAndPadding = textTreeNode.getMetric(constants.MARGIN_AND_PADDING),
+			// What we're really interested in here is separation between the text and 
+			// the next visual element, so if the background is similar enough to appear
+			// contiguous, then we can include that spacing with this element
+
+			var marginAndPadding = textTreeNode.getMetric(constants.EFFECTIVE_MARGIN_AND_PADDING),
 				fontSize = textTreeNode.getMetric(constants.FONT_SIZE),
 				fontSizeInPixels = getPixelsFromFontSize(fontSize),
 				score = Math.min(10, 10 * marginAndPadding / fontSizeInPixels);
@@ -597,7 +622,10 @@
 			rootAnalysis = new Analysis();
 
 		plugin.$el.each(function() {
-			var currentTarget = $(this);
+			var currentTarget = $(this),
+				parentTextTreeNode = new TextTreeNode(),
+				rootParent,
+				effectiveMarginAndPadding = 0;
 
 			textTree = buildTextTree(currentTarget);
 
@@ -612,10 +640,31 @@
 				}
 
 				// In this specific case transparent/rgba(0,0,0,0) probably means white
-				defaultBackgroundColor = defaultBackgroundColor || '#ffffff';
+				defaultBackgroundColor = standardizeColor(defaultBackgroundColor) || '#ffffff';
 			}
 
-			decorateTreeWithMeasurements(textTree, defaultBackgroundColor);
+			rootParent = currentTarget.parent();
+
+			while(rootParent[0] != document.body
+			 	&& rootParent.css('display') === 'block') {
+
+				var margin = rootParent.css('margin-left') || 0;
+
+				effectiveMarginAndPadding += getPixelsFromFontSize(rootParent.css('padding-left') || 0);
+
+				if(margin === 'auto')
+					margin = (rootParent.outerWidth(true) - rootParent.outerWidth()) / 2;
+
+				effectiveMarginAndPadding += getPixelsFromFontSize(margin);
+
+				rootParent = rootParent.parent();
+			}
+
+			// Making a dummy node to provide EM&P
+			parentTextTreeNode.addMetric(constants.BACKGROUND_COLOR, defaultBackgroundColor);
+			parentTextTreeNode.addMetric(constants.EFFECTIVE_MARGIN_AND_PADDING, effectiveMarginAndPadding);
+
+			decorateTreeWithMeasurements(textTree, defaultBackgroundColor, parentTextTreeNode);
 
 			rootAnalysis.addChild(analyzeTextTree(textTree));
 		});
