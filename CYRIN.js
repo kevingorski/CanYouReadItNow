@@ -472,13 +472,13 @@
 						? marginAndPadding + (parentTreeNode.getMetric(constants.EFFECTIVE_MARGIN_AND_PADDING) || 0)
 						: marginAndPadding);
 				
-				clone.html('M');
+				clone.html('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&nbsp;');
 				clone.css({
 						display : 'inline',
 						width : 'auto'
 					}).insertBefore(target);
 
-				textTreeNode.addMetric(constants.CHARACTERS_PER_LINE, lineLength / clone.width());
+				textTreeNode.addMetric(constants.CHARACTERS_PER_LINE, lineLength / (clone.width() / 53));
 
 				clone.remove();
 			}
@@ -535,10 +535,7 @@
 				fontSizeInPixels = getPixelsFromFontSize(fontSize),
 				idealLeading = Math.ceil(fontSizeInPixels * 1.5),
 				idealOffset = idealLeading - getPixelsFromFontSize(lineHeight),
-				// scale to target size, then increase by distance
 				lineLeadingScore = Math.min(10 * (1 - (Math.abs(idealOffset) / fontSizeInPixels)), 10);
-
-			// score should drop off quickly as the LH is offset from the ideal
 
 			analysis.addScore(key, roundToTenth(lineLeadingScore));
 		};
@@ -554,7 +551,7 @@
 
 			// Visual Presentation SC 1.4.8
 			var charactersPerLine = textTreeNode.getMetric(constants.CHARACTERS_PER_LINE),
-				offsetFromIdealCPL = charactersPerLine - 80, 
+				offsetFromIdealCPL = charactersPerLine - 80,
 				absOffset = Math.abs(offsetFromIdealCPL),
 				score = (offsetFromIdealCPL > 0)
 					? Math.max((10 - Math.round(absOffset / 5)), 0)

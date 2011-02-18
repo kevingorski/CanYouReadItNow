@@ -147,12 +147,10 @@ describe('CYRIN', function() {
 			expect(getScore(jQuery.CYRIN.LINE_LENGTH)).toEqual(9.9);
 		});
 
-		// TODO: Double-check
 		it('scores 14 pixel margin + padding for text 7.7', function() {
 			expect(getScore(jQuery.CYRIN.MARGIN_AND_PADDING)).toEqual(7.7);
 		});
 	
-		// TODO: Double-check
 		it('scores 11% of text stylized an 8.9', function() {
 			expect(getScore(jQuery.CYRIN.PERCENTAGE_OF_TEXT_STYLIZED)).toEqual(8.9);
 		});
