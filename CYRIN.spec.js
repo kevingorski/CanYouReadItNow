@@ -50,7 +50,7 @@ describe('CYRIN', function() {
 		};
 	
 		it('returns the line-height', function() {
-			expect(getMetric(jQuery.CYRIN.LINE_LEADING)).toEqual('21px');
+			expect(getMetric(jQuery.CYRIN.LINE_LEADING)).toEqual('27px');
 		});
 		
 		it('return the text alignment', function() {
@@ -58,7 +58,7 @@ describe('CYRIN', function() {
 		});
 			
 		it('returns the font size', function() {
-			expect(getMetric(jQuery.CYRIN.FONT_SIZE)).toEqual('16px');
+			expect(getMetric(jQuery.CYRIN.FONT_SIZE)).toEqual('18px');
 		});
 			
 		it('returns the text color', function() {
@@ -122,28 +122,7 @@ describe('CYRIN', function() {
 			return score.value;
 		};
 	
-		it('scores left justification a 10', function() {
-			expect(getScore(jQuery.CYRIN.JUSTIFICATION)).toEqual(10);
-		});
-	
-		it('scores 80 characters of text a 9.9', function() {
-			expect(getScore(jQuery.CYRIN.LINE_LENGTH)).toEqual(9.9);
-		});
-	
-		it('scores appropriate line leading a 10', function() {
-			expect(getScore(jQuery.CYRIN.LINE_LEADING)).toEqual(10);
-		});
-	
-		it('scores black text on a white background a 10', function() {
-			expect(getScore(jQuery.CYRIN.TEXT_COLOR_CONTRAST)).toEqual(10);
-		});
-	
-		// TODO: Double-check
-		it('scores 11% of text stylized an 8.9', function() {
-			expect(getScore(jQuery.CYRIN.PERCENTAGE_OF_TEXT_STYLIZED)).toEqual(8.9);
-		});
-	
-		it('scores 12pt text a 10', function() {
+		it('scores 18px (approximately 12pt on some systems) text a 10', function() {
 			expect(getScore(jQuery.CYRIN.FONT_SIZE)).toEqual(10);
 		});
 	
@@ -152,9 +131,34 @@ describe('CYRIN', function() {
 			expect(getScore(jQuery.CYRIN.FONT_SIZE, 'p:eq(0)')).toBeLessThan(10);
 		});
 	
-		// TODO: Double-check
-		it('scores 14 pixel margin + padding text 8.6', function() {
-			expect(getScore(jQuery.CYRIN.MARGIN_AND_PADDING)).toEqual(8.6);
+		it('scores left justification a 10', function() {
+			expect(getScore(jQuery.CYRIN.JUSTIFICATION)).toEqual(10);
 		});
+		
+		it('scores appropriate line leading a 10', function() {
+			expect(getScore(jQuery.CYRIN.LINE_LEADING)).toEqual(10);
+		});
+		
+		it('scores line leading equal to font-size a 5', function() {
+			expect(getScore(jQuery.CYRIN.LINE_LEADING, '#PoorLineLeading')).toEqual(5);
+		});
+			
+		it('scores 80 characters of text a 9.9', function() {
+			expect(getScore(jQuery.CYRIN.LINE_LENGTH)).toEqual(9.9);
+		});
+
+		// TODO: Double-check
+		it('scores 14 pixel margin + padding for text 7.7', function() {
+			expect(getScore(jQuery.CYRIN.MARGIN_AND_PADDING)).toEqual(7.7);
+		});
+	
+		// TODO: Double-check
+		it('scores 11% of text stylized an 8.9', function() {
+			expect(getScore(jQuery.CYRIN.PERCENTAGE_OF_TEXT_STYLIZED)).toEqual(8.9);
+		});
+	
+		it('scores black text on a white background a 10', function() {
+			expect(getScore(jQuery.CYRIN.TEXT_COLOR_CONTRAST)).toEqual(10);
+		});	
 	});
 });

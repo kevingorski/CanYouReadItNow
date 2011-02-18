@@ -532,9 +532,13 @@
 			var key = constants.LINE_LEADING,
 				lineHeight = textTreeNode.getMetric(key),
 				fontSize = textTreeNode.getMetric(constants.FONT_SIZE),
-				idealLeading = Math.ceil(getPixelsFromFontSize(fontSize) * 1.3),
+				fontSizeInPixels = getPixelsFromFontSize(fontSize),
+				idealLeading = Math.ceil(fontSizeInPixels * 1.5),
 				idealOffset = idealLeading - getPixelsFromFontSize(lineHeight),
-				lineLeadingScore = Math.max(10 - Math.abs(idealOffset / (idealLeading / 13)), 0);
+				// scale to target size, then increase by distance
+				lineLeadingScore = Math.min(10 * (1 - (Math.abs(idealOffset) / fontSizeInPixels)), 10);
+
+			// score should drop off quickly as the LH is offset from the ideal
 
 			analysis.addScore(key, roundToTenth(lineLeadingScore));
 		};
