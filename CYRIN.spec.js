@@ -86,11 +86,11 @@ describe('CYRIN', function() {
 		});
 			
 		it('returns the margin', function() {
-			expect(getMetric(jQuery.CYRIN.MARGIN)).toEqual('10px');
+			expect(getMetric(jQuery.CYRIN.MARGIN)).toEqual('4px');
 		});
 			
 		it('returns the padding', function() {
-			expect(getMetric(jQuery.CYRIN.PADDING)).toEqual('4px');
+			expect(getMetric(jQuery.CYRIN.PADDING)).toEqual('2px');
 		});
 			
 		it('returns the font families', function() {
@@ -106,7 +106,7 @@ describe('CYRIN', function() {
 		});
 		
 		it('returns an effective margin & padding that takes parent margin into account', function() {
-			expect(getMetric(jQuery.CYRIN.EFFECTIVE_MARGIN_AND_PADDING, '#effectiveMPTarget p')).toEqual(20);
+			expect(getMetric(jQuery.CYRIN.EFFECTIVE_MARGIN_AND_PADDING, '#effectiveMPTarget p')).toEqual(28);
 		});
 	});
 	

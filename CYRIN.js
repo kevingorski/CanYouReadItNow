@@ -646,7 +646,7 @@
 
 			rootParent = currentTarget.parent();
 
-			while(rootParent[0] != document.body
+			while(rootParent[0] != document
 			 	&& rootParent.css('display') === 'block') {
 
 				var margin = rootParent.css('margin-left') || 0;
