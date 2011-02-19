@@ -225,7 +225,6 @@
 			dpi;
 
         // Access to jQuery and DOM versions of element
-        base.$el = $(el);
         base.el = el;
 
 		$.CYRIN.defaultOptions.context = document.body;
@@ -612,7 +611,7 @@
 			return analysis;
 		}		
 
-		if(!(plugin.el && plugin.el.length && plugin.$el)) return 'Provide a target to analyze.';
+		if(!(plugin.el && plugin.el.length)) return 'Provide a target to analyze.';
 
 		if(!jQuery.contains(plugin.el, plugin.options.context)) return 'Target doesn\'t appear to be in the DOM.';
 
@@ -622,7 +621,7 @@
 			defaultBackgroundColor,
 			rootAnalysis = new Analysis();
 
-		plugin.$el.each(function() {
+		plugin.el.each(function() {
 			var currentTarget = $(this),
 				parentTextTreeNode = new TextTreeNode(),
 				rootParent,
