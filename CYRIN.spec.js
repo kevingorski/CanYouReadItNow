@@ -10,6 +10,7 @@ describe('CYRIN', function() {
 		});
 	});
 	
+	
 	describe('Input Types', function() {	
 		it('returns an error message when no target is supplied', function() {
 			expect(jQuery().CYRIN()).toBeAString();
@@ -34,6 +35,12 @@ describe('CYRIN', function() {
 		});
 	});
 	
+	
+	describe('Content Types', function() {
+		it('returns an analysis result when target includes a HTML comment', function() {
+			expect(jQuery('#TextWithComment').CYRIN().score).toBeDefined();
+		});
+	});
 	
 	describe('Metrics', function() {
 		var getMetric = function(name, alternateSelector) {
@@ -109,6 +116,7 @@ describe('CYRIN', function() {
 			expect(getMetric(jQuery.CYRIN.EFFECTIVE_MARGIN_AND_PADDING, '#effectiveMPTarget p')).toEqual(28);
 		});
 	});
+	
 	
 	describe('Scores', function() {
 		var getScore = function(name, alternateSelector) {

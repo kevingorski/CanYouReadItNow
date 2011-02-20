@@ -389,10 +389,14 @@
 				childTextTreeNodes = [],
 				childTextNodes = [];
 
-			if(node.nodeType === 3) // Node.TEXT_NODE, not available in IE
+			// Node.TEXT_NODE, not available in IE
+			if(node.nodeType === 3)
 				return new TextTreeNode(node);
-
+			
 			$.each(childNodes, function() {
+				if(this.nodeType === 8)
+					return;
+
 				if(this.nodeType === 3) {
 					// Ignore all white-space text nodes
 					if(this.nodeValue.match(/^\s+$/)) return;
@@ -660,7 +664,7 @@
 				rootParent = rootParent.parent();
 			}
 
-			// Making a dummy node to provide EM&P
+			// Making a dummy node to provide Effective Margin & Padding
 			parentTextTreeNode.addMetric(constants.BACKGROUND_COLOR, defaultBackgroundColor);
 			parentTextTreeNode.addMetric(constants.EFFECTIVE_MARGIN_AND_PADDING, effectiveMarginAndPadding);
 
