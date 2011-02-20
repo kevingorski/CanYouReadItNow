@@ -16,6 +16,11 @@ Right now, there are seven scores taken from eighteen metrics:
 
 Several of these scores are based off of formulas given in the W3C's [Web Content Accessibility Guidelines](http://www.w3.org/TR/WCAG20/).
 
+##Inspiration
+
+* [Self-testing pages with JavaScript](http://24ways.org/2009/self-testing-pages-with-javascript)
+* [Readability](http://www.readability.com)
+
 ##Possible uses
 This type of analytics could be used for:
 
@@ -36,16 +41,13 @@ The metrics and scores output by CYRIN are usually pretty reasonable, but:
 * The performance could be improved
 * There are more aspects to visual readability than are currently represented
 * Existing aspects of visual readability could use further refinement
-
-##Inspiration
-
-* [Self-testing pages with JavaScript](http://24ways.org/2009/self-testing-pages-with-javascript)
-* [Readability](http://www.readability.com)
+* Test coverage is mediocre
 
 ##Contributing
 Contributions are readily accepted with good example specs and changes to fulfill them.
 
 * To minifiy the core library JavaScript, place the YUI minifier JAR at /usr/local/bin/ and run the minify.sh BASH script before commiting.
+* Make sure to load the SpecRunner page in at least one browser before considering any changes complete.
 
 ##License
 As stated in the LICENSE file, Can You Read It Now is released under the [MIT License](http://www.opensource.org/licenses/mit-license) meaning that:
