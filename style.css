@@ -102,9 +102,9 @@ input:invalid, textarea:invalid {
 .no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
 
 
-::-moz-selection{ background: #eff90d; color: #444; text-shadow: none; }
-::selection { background: #eff90d; color:#444; text-shadow: none; }
-a:link { -webkit-tap-highlight-color: #eff90d; }
+::-moz-selection{ background: #ff9; color: #444; text-shadow: none; }
+::selection { background: #ff9; color:#444; text-shadow: none; }
+a:link { -webkit-tap-highlight-color: #ff9; }
 
 button {  width: auto; overflow: visible; }
 
@@ -128,22 +128,22 @@ body {
 }
 
 h1 { font-size: 5em; color: #000; }
+header { margin-bottom: 2em; }
 header .description {
 	font-size: 1.2em; 
 	margin: 0 1em;
 	font-style: italic;
 }
-header {
-	margin-bottom: 2em;
-}
 
 h1 a { text-decoration: none }
-h2 { font-size: 2em; color: #000; }
+h2 { font-size: 2em; color: #000; margin-top: 1.5em; }
 h3 { text-align: center; color: #000; }
 
-a { color: #000; }
-
-p { font-size: 1.25em; margin-bottom: 1em; }
+p, ul {
+	font-size: 1.25em;
+	line-height: 1.5em;
+	margin: 0 1em 1em;
+}
 
 .download { float: right; }
 
@@ -151,7 +151,7 @@ pre { background: #000; color: #fff; padding: 15px;}
 
 hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
 
-footer { text-align:center; padding-top:30px; font-style: italic; }
+footer { text-align:center; font-style: italic; margin-top: 3em; }
 
 #GitWedge { position: absolute; top: 0; right: 0; border: 0; }
 
