@@ -138,6 +138,38 @@ header .description {
 	font-style: italic;
 }
 
+nav {
+	padding: 1em;
+	position: fixed;
+	top: 12em;
+	right: 1em;
+	
+	background-color: #EEE;
+	border: #CCC solid thin;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
+}
+
+nav:hover {
+	background-color: #DDD;
+	border-color: #BBB;
+}
+
+
+/* Fix for overlapping content */
+@media screen and (max-width: 1075px) {
+	nav {
+		position: static;
+		top: auto;
+		right: auto;
+	}
+}
+
 h1, h2 {
 	text-shadow: 3px 3px 5px #AAA;
 	filter: dropshadow(color=#AAA, offx=3, offy=3);
@@ -159,7 +191,7 @@ pre { background: #000; color: #fff; padding: 15px;}
 
 hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
 
-footer { text-align:center; font-style: italic; margin-top: 3em; }
+footer { text-align:center; font-style: italic; margin: 3em 0; }
 
 #GitWedge { position: absolute; top: 0; right: 0; border: 0; }
 
