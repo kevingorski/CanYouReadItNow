@@ -57,7 +57,25 @@
 		
 		<section id="Example">
 			<h2>Example/Demo</h2>
-			<p>None yet, but coming in the next update!</p>
+			<p>Can You Read It Now is a jQuery plug-in, so it is invoked just like a jQuery function:</p>
+			<code>
+				var analysis = jQuery('#Synopsis p').CYRIN();
+			</code>
+			<div class="Example">
+				<p><a id="ExSynopsis" href="#">&gt; Run Example</a></p>
+			</div>
+			<p>
+				In this example, a single paragraph is analyzed and a big ol' tree comes back. 
+				You can inspect the metrics that were gathered to come up with the scores that are returned,
+				which helps with debugging the results.
+			</p>
+			<p>
+				More complicated scenarios work as expected too, like analyizing the body element of a page
+				or using a selector that returns multiple items. The root analysis will be a weighted result
+				of all elements provided and each child analysis describes both the aggregate scores of that
+				entire tree and that specific node if there is any text to analyze.
+			</p>
+			<p>Objects displayed using <a href="https://github.com/jamespadolsey/prettyPrint.js">prettyPrint.js</a></p>
 		</section>
 		
 		<section id="PossibleUses">
@@ -107,5 +125,19 @@
 	</div>
 
 	<a href="http://github.com/kevingorski/CanYouReadItNow"><img id="GitWedge" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+	
+	<script src="js/libs/prettyPrint.js"></script>
+	<script src="js/libs/jquery-1.5.1.min.js"></script>
+	<script src="js/libs/CYRIN.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(function() {
+			$('#ExSynopsis').click(function(event) {
+				event.preventDefault();
+				
+				$(this).parent()
+					.replaceWith(prettyPrint($('#Synopsis p').CYRIN()));
+			});
+		});
+	</script>
 
 </body></html>

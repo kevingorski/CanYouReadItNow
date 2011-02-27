@@ -160,6 +160,15 @@ nav:hover {
 	border-color: #BBB;
 }
 
+code {
+	display: block;
+	padding: 0 1.5em;
+	margin: 1.5em 0;
+}
+
+.Example {
+	margin: 0 1.5em 1em;
+}
 
 /* Fix for overlapping content */
 @media screen and (max-width: 1075px) {
