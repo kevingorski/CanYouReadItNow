@@ -139,7 +139,7 @@ header .description {
 }
 
 nav {
-	padding: 1em;
+	padding: 1.5em;
 	position: fixed;
 	top: 12em;
 	right: 1em;
@@ -160,6 +160,14 @@ nav:hover {
 	border-color: #BBB;
 }
 
+nav ul {
+	margin-left: 1em;
+}
+
+nav ul li {
+	list-style-type: disc;
+}
+
 code {
 	display: block;
 	padding: 0 1.5em;
@@ -171,11 +179,16 @@ code {
 }
 
 /* Fix for overlapping content */
-@media screen and (max-width: 1075px) {
+@media screen and (max-width: 1125px) {
 	nav {
 		position: static;
+		float: right;
 		top: auto;
 		right: auto;
+	}
+	
+	#Synopsis {
+		margin-right: 17em;
 	}
 }
 
@@ -188,10 +201,18 @@ h1 a { text-decoration: none }
 h2 { font-size: 2em; color: #000; }
 h3 { text-align: center; color: #000; }
 
-p, ul {
+p, ul, code {
 	font-size: 1.25em;
 	line-height: 1.5em;
 	margin: 0 1.5em 1em;
+}
+
+code {
+	padding: 0 1em;
+}
+
+ul li ul {
+	font-size: 1em;
 }
 
 .download { float: right; }
