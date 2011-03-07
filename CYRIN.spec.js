@@ -50,10 +50,7 @@ describe('CYRIN', function() {
 	
 			expect(actual.metrics).toBeDefined();
 	
-			var metric = jQuery.grep(actual.metrics, 
-				function(item) { return item.name === name; })[0];
-	
-			return metric.value;
+			return actual.getMetric(name);
 		};
 	
 		it('returns the line-height', function() {
@@ -124,10 +121,7 @@ describe('CYRIN', function() {
 	
 			expect(actual.aggregateScores).toBeDefined();
 	
-			var score = jQuery.grep(actual.aggregateScores,
-				function(item) { return item.name === name; })[0];
-	
-			return score.value;
+			return actual.getAggregateScore(name);
 		};
 	
 		it('scores 18px (approximately 12pt on some systems) text a 10', function() {

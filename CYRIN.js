@@ -158,6 +158,24 @@
 			this.children[i].applyToAll(fn);
 		};
 	}
+	
+	Analysis.prototype.getMetric = function(name) {
+		var metric = jQuery.grep(this.metrics, function(item) { return item.name === name; })[0];
+
+		return metric.value;
+	}
+	
+	Analysis.prototype.getScore = function(name) {
+		var score = jQuery.grep(this.scores, function(item) { return item.name === name; })[0];
+
+		return score.value;
+	}
+	
+	Analysis.prototype.getAggregateScore = function(name) {
+		var score = jQuery.grep(this.aggregateScores, function(item) { return item.name === name; })[0];
+		
+		return score.value;
+	}
 
 	Analysis.prototype.rollUp = function() {
 		var self = this;
