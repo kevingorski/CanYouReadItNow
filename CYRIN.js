@@ -148,6 +148,16 @@
 		this.aggregateScores.sort(compareNames);
 		this.metrics.sort(compareNames);
 	}
+	
+	Analysis.prototype.applyToAll = function(fn) {
+		fn(this);
+		
+		if(!this.children.length) return;
+		
+		for (var i = this.children.length - 1; i >= 0; i--){
+			this.children[i].applyToAll(fn);
+		};
+	}
 
 	Analysis.prototype.rollUp = function() {
 		var self = this;
