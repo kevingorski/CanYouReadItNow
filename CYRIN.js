@@ -283,6 +283,7 @@
 
     $.CYRIN.defaultOptions = {};
 	$.extend($.CYRIN, constants);
+	$.CYRIN.version = '0.1.0';
 
 
     $.fn.CYRIN = function(radius, options){
