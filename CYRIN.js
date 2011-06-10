@@ -646,7 +646,8 @@
 
 		if(!(plugin.el && plugin.el.length)) return 'Provide a target to analyze.';
 
-		if(!jQuery.contains(plugin.el, plugin.options.context)) return 'Target doesn\'t appear to be in the DOM.';
+		// Non-intuitive work-around for jQuery/FireFox error from jQuery.contains() with a jQuery object (http://bugs.jquery.com/ticket/7297)
+		if($(plugin.el, plugin.options.context).size() == 0) return 'Target doesn\'t appear to be in the DOM.';
 
 		var overallScore = 0,
 			totalPossible = 0,
