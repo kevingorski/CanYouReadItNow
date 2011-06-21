@@ -423,7 +423,9 @@
 				return new TextTreeNode(node);
 			
 			$.each(childNodes, function() {
-				if(this.nodeType === 8)
+				// No comments or images will be dealt with, thank you
+				if(this.nodeType === 8 
+					|| this.nodeName.match(/IMG|BR/))
 					return;
 
 				if(this.nodeType === 3) {
