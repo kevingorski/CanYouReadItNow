@@ -18,14 +18,12 @@
 		}
 	</style>
 </head>
-<body>
-	
+<body>	
 	<script type="text/javascript" src="CYRIN.spec.js"></script>
 	<script type="text/javascript">
 		jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
 		jasmine.getEnv().execute();
 	</script>
-	
 	<div id="testTarget" style="text-align: left; width: 960px;">
 		<p style="font-size:8pt;">Text</p>
 		<p style="line-height: 27px; font-size: 18px; color: black; letter-spacing: 3px; background: white url(images/pixel.gif); margin: 4px; padding: 2px; font-family: 'Times New Roman', serif;"><strong>123456789</strong> 123456789 123456789 123456789 123456789 123456789 123456789 123456789 </p>
@@ -38,7 +36,10 @@
 				<img src="blank.gif" />
 			</p>
 		</div>
-		
+		<script type="text/javascript">
+			(function() {
+			}());
+		</script>
 		<p id="PoorLineLeading" style="line-height: 18px; font-size: 18px; width:300px;">
 			This text doesn't have much line leading, so it's going to be smushed up against the previous line and be harder to read as you scan. That's what they say!
 		</p>

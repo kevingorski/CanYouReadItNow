@@ -425,7 +425,7 @@
 			$.each(childNodes, function() {
 				// No comments or images will be dealt with, thank you
 				if(this.nodeType === 8 
-					|| this.nodeName.match(/IMG|BR/))
+					|| this.nodeName.match(/IMG|BR|SCRIPT|STYLE/))
 					return;
 
 				if(this.nodeType === 3) {
@@ -681,7 +681,7 @@
 
 			rootParent = currentTarget.parent();
 
-			while(rootParent[0] != document
+			while(rootParent[0].nodeType != 9 // DOCUMENT_NODE
 			 	&& rootParent.css('display') === 'block') {
 
 				var margin = rootParent.css('margin-left') || 0;
