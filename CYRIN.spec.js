@@ -82,7 +82,7 @@ describe('CYRIN', function() {
 		});
 			
 		it('returns the background color', function() {
-			expect(getMetric(jQuery.CYRIN.BACKGROUND_COLOR)).toEqual('#ffffff');
+			expect(getMetric(jQuery.CYRIN.BACKGROUND_COLOR)).toEqual('#FFFFFF');
 		});
 			
 		it('returns the background image name', function() {
