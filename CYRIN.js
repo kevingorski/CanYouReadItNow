@@ -333,7 +333,11 @@
 		function standardizeColor(stringColor) {
 			if(!stringColor) return false;
 			
-			return Color(stringColor).hexString();
+			var color = Color(stringColor);
+			
+			if(color.alpha() === 0) return false;
+			
+			return color.hexString();
 		};
 
 		function calculateContrastRatio(backgroundColor, textColor) {
