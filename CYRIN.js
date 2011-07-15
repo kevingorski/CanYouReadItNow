@@ -360,7 +360,7 @@
 				return new TextTreeNode(node);
 			
 			$.each(childNodes, function() {
-				// No comments or images will be dealt with, thank you
+				// No comments or other element types that don't display text
 				if(this.nodeType === 8 
 					|| this.nodeName.match(/IMG|BR|SCRIPT|STYLE/))
 					return;
@@ -386,8 +386,6 @@
 
 			if(textTreeNode.textChildren) {
 				var textLength = 0,
-					clone = target.clone(),
-
 					blockElement = !!(target.css('display').match(/block/i)),
 					fontSize,
 					lineHeight = target.css('line-height'),
@@ -435,23 +433,31 @@
 					.addMetric(constants.MARGIN_AND_PADDING,
 						marginAndPadding = getPixelsFromFontSize(margin) + getPixelsFromFontSize(padding))
 
-				// If the parent appearas contiguous with this element,
-				// add it's effective M&P to the current M&P
+				// If the parent appears contiguous with this element,
+				// add its effective M&P to the current M&P
 				textTreeNode.addMetric(constants.EFFECTIVE_MARGIN_AND_PADDING,
 					(parentTreeNode
 						&& backgroundColor === parentTreeNode.getMetric(constants.BACKGROUND_COLOR))
 						? marginAndPadding + (parentTreeNode.getMetric(constants.EFFECTIVE_MARGIN_AND_PADDING) || 0)
 						: marginAndPadding);
 				
-				clone.html('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&nbsp;');
-				clone.css({
-						display : 'inline',
-						width : 'auto'
-					}).insertBefore(target);
 
-				textTreeNode.addMetric(constants.CHARACTERS_PER_LINE, lineLength / (clone.width() / 53));
+				// Shorcut for small blocks of text to avoid costly DOM manipulation
+				if(textLength < 80)
+					textTreeNode.addMetric(constants.CHARACTERS_PER_LINE, 80);
+				else {
+					var clone = target.clone();
 
-				clone.remove();
+					clone.html('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&nbsp;');
+					clone.css({
+							display : 'inline',
+							width : 'auto'
+						}).insertBefore(target);
+
+					textTreeNode.addMetric(constants.CHARACTERS_PER_LINE, lineLength / (clone.width() / 53));
+
+					clone.remove();
+				}
 			}
 			
 			if(backgroundColor) defaultBackgroundColor = backgroundColor;
