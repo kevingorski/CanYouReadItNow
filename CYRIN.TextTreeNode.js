@@ -1,4 +1,4 @@
-if(typeof CYRIN == 'undefined') CYRIN = {};
+if(typeof CYRIN == 'undefined') var CYRIN = {};
 
 if(typeof CYRIN.TextTreeNode == 'undefined') {
 	CYRIN.TextTreeNode = function(DOMNode, textTreeChildren, textChildren) {
