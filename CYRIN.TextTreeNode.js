@@ -1,33 +1,36 @@
-// TextTreeNode - A node in the DOM and its metrics
-function TextTreeNode(DOMNode, textTreeChildren, textChildren) {
-	this.DOMNode = DOMNode;
-	this.textTreeChildren = textTreeChildren;
-	this.textChildren = textChildren;
+if(typeof CYRIN == 'undefined') CYRIN = {};
 
-	this.metrics = [];
-}
+if(typeof CYRIN.TextTreeNode == 'undefined') {
+	CYRIN.TextTreeNode = function(DOMNode, textTreeChildren, textChildren) {
+		this.DOMNode = DOMNode;
+		this.textTreeChildren = textTreeChildren;
+		this.textChildren = textChildren;
 
-TextTreeNode.prototype.addMetric = function(name, value) {
-	this.metrics.push({
-		name : name,
-		value : value
-	});
+		this.metrics = [];
+	}
 
-	return this;
-}
+	CYRIN.TextTreeNode.prototype.addMetric = function(name, value) {
+		this.metrics.push({
+			name : name,
+			value : value
+		});
 
-TextTreeNode.prototype.getMetric = function(name) {
-	var metricArray = $.grep(this.metrics, function(item) { return item.name === name; });
+		return this;
+	}
+
+	CYRIN.TextTreeNode.prototype.getMetric = function(name) {
+		var metricArray = $.grep(this.metrics, function(item) { return item.name === name; });
 	
-	return metricArray && metricArray.length ? metricArray[0].value : false;
-}
+		return metricArray && metricArray.length ? metricArray[0].value : false;
+	}
 
-TextTreeNode.prototype.updateMetric = function(name, value) {
-	var metric = $.grep(this.metrics, function(item) { return item.name === name; })[0];
+	CYRIN.TextTreeNode.prototype.updateMetric = function(name, value) {
+		var metric = $.grep(this.metrics, function(item) { return item.name === name; })[0];
 
-	metric.value = value;
-}
+		metric.value = value;
+	}
 
-TextTreeNode.prototype.releaseDOMNode = function() {
-	this.DOMNode = null;
+	CYRIN.TextTreeNode.prototype.releaseDOMNode = function() {
+		this.DOMNode = null;
+	}
 }

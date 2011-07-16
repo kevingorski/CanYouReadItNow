@@ -1,3 +1,4 @@
+//
 //	Can You Read It Now?
 //		by Kevin Gorski
 //		Analyze target DOM element for visual readability in the context of the current page.
@@ -145,7 +146,7 @@
 
 			// Node.TEXT_NODE, not available in IE
 			if(node.nodeType === 3)
-				return new TextTreeNode(node);
+				return new CYRIN.TextTreeNode(node);
 			
 			$.each(childNodes, function() {
 				// No comments or other element types that don't display text
@@ -165,7 +166,7 @@
 				childTextTreeNodes.push(buildTextTree($(this)));
 			});
 
-			return new TextTreeNode(node, childTextTreeNodes, childTextNodes);
+			return new CYRIN.TextTreeNode(node, childTextTreeNodes, childTextNodes);
 		};
 
 		function decorateTreeWithMeasurements(textTreeNode, defaultBackgroundColor, parentTreeNode) {
@@ -341,7 +342,7 @@
 		};
 
 		function analyzeTextTree(textTree, parentNode) {
-			var analysis = new Analysis(textTree);
+			var analysis = new CYRIN.Analysis(textTree);
 
 			if(!textTree.getMetric(constants.BACKGROUND_COLOR))
 				textTree.updateMetric(
@@ -388,11 +389,11 @@
 			totalPossible = 0,
 			textTree,
 			defaultBackgroundColor,
-			rootAnalysis = new Analysis();
+			rootAnalysis = new CYRIN.Analysis();
 
 		plugin.el.each(function() {
 			var currentTarget = $(this),
-				parentTextTreeNode = new TextTreeNode(),
+				parentTextTreeNode = new CYRIN.TextTreeNode(),
 				rootParent,
 				effectiveMarginAndPadding = 0;
 
