@@ -72,11 +72,13 @@
 		metric.value = value;
 	}
 	
+	TextTreeNode.prototype.releaseDOMNode = function() {
+		this.DOMNode = null;
+	}
+	
 	
 	// Analysis definition
 	function Analysis(textTree) {
-		this.textTree = textTree;
-
 		this.score = 0;
 		this.aggregateScore = 0;
 		this.totalPossible = 0;
@@ -166,29 +168,29 @@
 	}
 	
 	Analysis.prototype.getMetric = function(name) {
-		var metric = jQuery.grep(this.metrics, function(item) { return item.name === name; })[0];
-
-		return metric.value;
+		var metricArray = $.grep(this.metrics, function(item) { return item.name === name; });
+		
+		return metricArray && metricArray.length ? metricArray[0].value : false;
+		
 	}
 	
 	Analysis.prototype.getScore = function(name) {
-		var score = jQuery.grep(this.scores, function(item) { return item.name === name; })[0];
+		var score = $.grep(this.scores, function(item) { return item.name === name; })[0];
 
 		return score.value;
 	}
 	
 	Analysis.prototype.getAggregateScore = function(name) {
-		var score = jQuery.grep(this.aggregateScores, function(item) { return item.name === name; })[0];
+		var score = $.grep(this.aggregateScores, function(item) { return item.name === name; })[0];
 		
 		return score.value;
 	}
 
 	Analysis.prototype.rollUp = function() {
-		var self = this;
 		
 		if(this.children && this.children.length) {
 			var currentAnalysis = this,
-				directCharacterCount = this.textTree ? this.textTree.getMetric(constants.TEXT_LENGTH) : 0;
+				directCharacterCount = this.getMetric(constants.TEXT_LENGTH);
 
 			currentAnalysis.totalCharacterCount = directCharacterCount;
 
@@ -242,7 +244,7 @@
 			currentAnalysis.aggregateScore = roundToTenth(currentAnalysis.aggregateScore);
 
 		} else {
-			this.totalCharacterCount = this.textTree.getMetric(constants.TEXT_LENGTH);
+			this.totalCharacterCount = this.getMetric(constants.TEXT_LENGTH);
 			this.aggregateScores = this.scores;
 			this.aggregateScore = this.score;
 		}
@@ -585,6 +587,8 @@
 				$.each(textTree.textTreeChildren, function() {
 					analysis.addChild(analyzeTextTree(this, textTree));
 				});
+			
+			textTree.releaseDOMNode();
 
 			return analysis;
 		}		
