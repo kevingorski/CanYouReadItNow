@@ -1578,13 +1578,13 @@ if(typeof CYRIN.TextTreeNode == 'undefined') {
 	}
 
 	CYRIN.TextTreeNode.prototype.getMetric = function(name) {
-		var metricArray = $.grep(this.metrics, function(item) { return item.name === name; });
+		var metricArray = jQuery.grep(this.metrics, function(item) { return item.name === name; });
 	
 		return metricArray && metricArray.length ? metricArray[0].value : false;
 	}
 
 	CYRIN.TextTreeNode.prototype.updateMetric = function(name, value) {
-		var metric = $.grep(this.metrics, function(item) { return item.name === name; })[0];
+		var metric = jQuery.grep(this.metrics, function(item) { return item.name === name; })[0];
 
 		metric.value = value;
 	}
