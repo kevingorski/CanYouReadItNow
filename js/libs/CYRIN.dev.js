@@ -1654,13 +1654,6 @@ if(typeof CYRIN.Analysis == 'undefined') {
 			function(item) { return item.name === name; })[0].value += value;
 	}
 
-	CYRIN.Analysis.prototype.addSuggestion = function(message, basedOnScore) {
-		this.suggestions.push({
-			message : message,
-			priority : 10 - basedOnScore
-		});
-	}
-
 	CYRIN.Analysis.prototype.addChild = function(child) {
 		this.children.push(child);
 	}
@@ -1805,14 +1798,6 @@ if(typeof CYRIN.Analysis == 'undefined') {
 			TEXT_COLOR_CONTRAST : 'Text Color Contrast',
 			TEXT_LENGTH : 'Text Length'
 		};
-
-	constants.FONT_SIZE.description = 'A good default font size will keep the user from having to adjust it manually, which may cause problems with your design.';
-	constants.JUSTIFICATION.description = 'If you\'re not left-justifying your text, you\'re probably doing it wrong.';
-	constants.LINE_LENGTH.description = 'When line length of text gets too long, it makes text harder to read. [WCAG SC 1.4.8]';
-	constants.TEXT_COLOR_CONTRAST.description = 'The contrast ratio between the text color and the background color needs to be greater the smaller the text is [WCAG 1.4.6]';
-	constants.LINE_LEADING.description = 'The space between each line of text should be large enough to make visual separation of lines easy without creating an awkward amount of space [WCAG SC 1.4.8]';
-	constants.MARGIN_AND_PADDING.description = 'Creating visual space on the left and right of text will make it easier to visually separate from the rest of the page';
-	constants.PERCENTAGE_OF_TEXT_STYLIZED.description = 'Bold, italicized, and all caps text should be kept to a minimum';
 
 	function roundToTenth(value) {
 		return Math.round(value * 10) / 10;
