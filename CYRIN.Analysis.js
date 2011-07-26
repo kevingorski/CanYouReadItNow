@@ -60,13 +60,6 @@ if(typeof CYRIN.Analysis == 'undefined') {
 			function(item) { return item.name === name; })[0].value += value;
 	}
 
-	CYRIN.Analysis.prototype.addSuggestion = function(message, basedOnScore) {
-		this.suggestions.push({
-			message : message,
-			priority : 10 - basedOnScore
-		});
-	}
-
 	CYRIN.Analysis.prototype.addChild = function(child) {
 		this.children.push(child);
 	}
