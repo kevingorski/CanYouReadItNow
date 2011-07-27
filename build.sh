@@ -3,6 +3,6 @@ rm deployable/CYRIN.dev.js
 echo "Combining JavaScript"
 cat lib/Array.filter.js lib/color-0.3.0.js CYRIN.TextTreeNode.js CYRIN.Analysis.js CYRIN.js >> deployable/CYRIN.dev.js
 echo "Compressing JavaScript"
-java -jar /usr/local/bin/yuicompressor-2.4.2.jar --line-break 500 -o deployable/CYRIN.min.js --type js deployable/CYRIN.dev.js
+uglifyjs --no-copyright --unsafe --max-line-len 500 --output deployable/CYRIN.min.js deployable/CYRIN.dev.js
 echo "Adding minified files"
 git add deployable/CYRIN.min.js deployable/CYRIN.dev.js
