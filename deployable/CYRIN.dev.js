@@ -1630,8 +1630,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
 	CYRIN.Analysis.prototype.addScore = function(name, value) {
 		this.scores.push({
 			name : name,
-			value : value,
-			description : name.description
+			value : value
 		});
 
 		this.score += value;
@@ -1840,7 +1839,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
 
     $.CYRIN.defaultOptions = {};
 	$.extend($.CYRIN, constants);
-	$.CYRIN.version = '0.1.0';
+	$.CYRIN.version = '0.2.0';
 
 
     $.fn.CYRIN = function(radius, options){

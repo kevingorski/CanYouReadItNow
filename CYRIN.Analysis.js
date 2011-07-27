@@ -36,8 +36,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
 	CYRIN.Analysis.prototype.addScore = function(name, value) {
 		this.scores.push({
 			name : name,
-			value : value,
-			description : name.description
+			value : value
 		});
 
 		this.score += value;
