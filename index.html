@@ -27,20 +27,23 @@
 			<ul>
 				<li><a href="#Synopsis">Synopsis</a></li>
 				<li><a href="#Provides">What CYRIN provides</a></li>
-				<li><a href="#Example">Example/Demo</a></li>
+				<li><a href="#Demo">Demonstration</a></li>
 				<li><a href="#PossibleUses">Possible Uses</a></li>
+				<li><a href="#Inspiration">Inspiration</a></li>
 				<li><a href="#ProjectDetails">Project Details</a></li>
-				<li><a href="#Download">Download</a></li>
 			</ul>
 		</nav>
 
 		<section id="Synopsis">
-			<h2>Synopsis</h2>
 			<p>
 				Can You Read It Now (or CYRIN) provides the numerical basis for implementing features 
 				related to the visual readability (not the reading comprehension level) of text on the web.
 				CYRIN powers the <a href="http://canyoureaditnow.com" target="_blank">bookmarklet of the same name</a>
 			</p>
+			<ul>
+				<li><a href="https://github.com/kevingorski/CanYouReadItNow/raw/master/deployable/CYRIN.dev.js">Development Version</a></li>
+				<li><a href="https://github.com/kevingorski/CanYouReadItNow/raw/master/deployable/CYRIN.min.js">Production Version</a> (minified)</li>
+			</ul>
 		</section>
 		
 		<section id="Provides">
@@ -58,8 +61,8 @@
 			<p>Several of these scores are based off of formulas given in the W3C's <a href="http://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines</a>.</p>
 		</section>
 		
-		<section id="Example">
-			<h2>Example/Demo</h2>
+		<section id="Demo">
+			<h2>Demonstration</h2>
 			<p>Can You Read It Now is a jQuery plug-in, so it is invoked just like a jQuery function:</p>
 			<code>
 				var analysis = jQuery('#Synopsis p').CYRIN();
@@ -91,6 +94,14 @@
 			</ul>
 		</section>
 
+		<section id="Inspiration">
+			<h2>Inspiration</h2>
+			<ul>
+				<li><a href="http://24ways.org/2009/self-testing-pages-with-javascript">Self-testing pages with JavaScript</a></li>
+				<li><a href="http://www.readability.com">Readability</a></li>
+			</ul>
+		</section>
+
 		<section id="ProjectDetails">
 			<h2>Project Details</h2>
 			<ul>
@@ -105,19 +116,6 @@
 					</ul>
 				</li>
 			</ul>
-		</section>
-		
-		<section id="Download">
-			<h2>Download</h2>
-			<p>
-				You can download this project in either
-				<a href="http://github.com/kevingorski/CanYouReadItNow/zipball/master">zip</a> or
-				<a href="http://github.com/kevingorski/CanYouReadItNow/tarball/master">tar</a> formats.
-			</p>
-			<p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-				by running:
-				<pre>$ git clone git://github.com/kevingorski/CanYouReadItNow</pre>
-			</p>
 		</section>
 
 		<footer>
@@ -135,8 +133,16 @@
 			$('#ExSynopsis').click(function(event) {
 				event.preventDefault();
 				
-				$(this).parent()
-					.replaceWith(prettyPrint($('#Synopsis p').CYRIN()));
+				var analysis = $('#Synopsis p').CYRIN();
+				
+				delete analysis.metrics;
+				delete analysis.score;
+				delete analysis.scores;
+				delete analysis.suggestions;
+				
+				$(this)
+					.parent()
+					.replaceWith(prettyPrint(analysis));
 			});
 		});
 	</script>
