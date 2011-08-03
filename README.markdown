@@ -46,7 +46,7 @@ The metrics and scores output by CYRIN are usually pretty reasonable, but:
 ##Contributing
 Contributions are readily accepted with good example specs and changes to fulfill them.
 
-* To minifiy the core library JavaScript, place the YUI minifier JAR at /usr/local/bin/ and run the minify.sh BASH script before commiting.
+* To minifiy the core library JavaScript, install [UglifyJS](https://github.com/mishoo/UglifyJS) and run the build.sh BASH script before commiting.
 * Make sure to load the SpecRunner page in at least one browser before considering any changes complete.
 
 ##License
