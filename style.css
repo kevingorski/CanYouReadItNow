@@ -59,8 +59,8 @@ html { overflow-y: scroll; }
 
 
 a:hover, a:active { outline: none; }
-a, a:active, a:visited { color: #607890; }
-a:hover { color: #036; }
+a, a:active, a:visited { color: #036; }
+a:hover { color: #607890; }
 
 
 ul, ol { margin-left: 2em; }
@@ -87,7 +87,7 @@ textarea { overflow: auto; }
 .ie6 legend, .ie7 legend { margin-left: -7px; } 
 
 input[type="radio"] { vertical-align: text-bottom; }
-input[type="checkbox"] { vertical-align: bottom; }
+input[type="checkbox"] { vertical-align: middle; }
 .ie7 input[type="checkbox"] { vertical-align: baseline; }
 .ie6 input { vertical-align: text-bottom; }
 
@@ -115,142 +115,190 @@ button {  width: auto; overflow: visible; }
  * Primary styles
  */
 
+/* Sizing */
 body {
-	margin-top: 1.0em;
-	background-color: #fff;
-	font-family: Helvetica,Arial,FreeSans;
-	color: #000;
+	line-height: 1.5em;
+	margin: 0;
+	padding: 4.5em 3em 3em 3em;
 }
 
 #container {
 	margin: 0 auto;
-	width: 700px;
+	padding-right: 18em;
+	width: 58em;
 }
 
 h1 { 
-	font-size: 5em; 
-	color: #000;
+	font-size: 4em;
+	line-height: 1.125em;
 }
-header { margin-bottom: 2em; }
+
+h2 { 
+	font-size: 2em;
+	line-height: 1.5em;
+}
+
+header, section {
+	margin: 0 0 3em 18em;
+}
+
 header .description {
-	font-size: 1.2em; 
-	margin: 0 1.5em;
+	font-size: 1.5em; 
+	line-height: 1em;
+	text-indent: 1em;
+}
+
+p, li {
+	font-size: 1em;
+	line-height: 1.5em;
+}
+
+p {
+	margin: 0 0 1.5em;
+}
+
+ul {
+	margin: 0 0 1.5em 3em;
+}
+
+
+/* All other styles */
+body, button, input, table td, table th, input, textarea {
+	color: #25487B;
+	font-family: rooney-web-1,rooney-web-2,Cambria, Georgia, serif;
+	font-size: 16px;
+}
+
+body {
+	background-color: #FFE;
+	background-image: url("images/grid.png");
+	background-position:4.5em 4.5em, 4.5em 4.5em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #000;
+	text-shadow: 2px 2px 3px #AAA;
+	font-family: crete-1,crete-2;
+}
+
+#container header h1 a { 
+	color: #000;
+	text-decoration: none;
+}
+
+header .description {
 	font-style: italic;
 }
 
-nav {
-	padding: 1.5em;
-	position: fixed;
-	top: 12em;
-	right: 1em;
-	
-	background-color: #EEE;
-	border: #CCC solid thin;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	
-	-webkit-transition: all .5s ease;
-	-moz-transition: all .5s ease;
-	-o-transition: all .5s ease;
-	transition: all .5s ease;
+#Bookmarklet, #GitHub {
+	float: left;
+	text-align: center;
+	width: 15em;
 }
 
-nav:hover {
-	background-color: #DDD;
-	border-color: #BBB;
-}
-
-nav ul {
-	margin-left: 1em;
-}
-
-nav ul li {
-	list-style-type: disc;
-}
-
-code {
-	display: block;
-	padding: 0 1.5em;
-	margin: 1.5em 0;
-}
-
-.Example {
-	margin: 0 1.5em 1em;
-}
-
-/* Fix for overlapping content */
-@media screen and (max-width: 1125px) {
-	nav {
-		position: static;
-		float: right;
-		top: auto;
-		right: auto;
-	}
-	
-	#Synopsis {
-		margin-right: 17em;
-	}
-}
-
-h1, h2 {
-	text-shadow: 3px 3px 5px #AAA;
-	filter: dropshadow(color=#AAA, offx=3, offy=3);
-}
-
-h1 a { text-decoration: none }
-h2 { font-size: 2em; color: #000; }
-h3 { text-align: center; color: #000; }
-
-p, ul, code {
-	font-size: 1.25em;
-	line-height: 1.5em;
-	margin: 0 1.5em 1em;
-}
-
-code {
-	padding: 0 1em;
-}
-
-ul li ul {
+#Bookmarklet p, #GitHub p {
 	font-size: 1em;
 }
 
-.download { float: right; }
-
-pre { background: #000; color: #fff; padding: 15px;}
-
-hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-
-footer { text-align:center; font-style: italic; margin: 3em 0; }
-
-#GitWedge { position: absolute; top: 0; right: 0; border: 0; }
-
-section {
-	border: #DDD solid thin;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	
-	margin: 1em 0;
-	padding: 1.5em;
-	
-	-webkit-transition: all .5s ease;
-	-moz-transition: all .5s ease;
-	-o-transition: all .5s ease;
-	transition: all .5s ease;
+#Target {
+	display: block;
+	height: 144px;
+	width: 144px;
+	margin: 0 auto;
+	background-image: url("images/Calliper-Target.png");
+	text-indent: -9999px;
 }
 
-section:hover {
-	background-color: #EEE;
-	border-color: #CCC;
+#Bookmarklet p small {
+	display: block;
+	font-style: italic;
+	text-align: right;
+}
+
+section.Introduction {
+	
+}
+
+#Examples {
+	float: left;
+	list-style: none;
+	width: 100%;
+}
+#Examples li { 
+	float: left;
+	width: 14em;
+}
+#Examples li ul li { 
+	float: none; 
 }
 
 
+
+
+/*
+ * Non-semantic helper classes: please define your styles before this section.
+ */
+
+/* for image replacement */
 .ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
+
+/* Hide for both screenreaders and browsers
+   css-discuss.incutio.com/wiki/Screenreader_Visibility */
 .hidden { display: none; visibility: hidden; }
+
+/* Hide only visually, but have it available for screenreaders: by Jon Neal
+  www.webaim.org/techniques/css/invisiblecontent/  &  j.mp/visuallyhidden */
 .visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
-.visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+
+/* Hide visually and from screenreaders, but maintain layout */
 .invisible { visibility: hidden; }
+
+/* >> The Magnificent CLEARFIX: Updated to prevent margin-collapsing on child elements << j.mp/bestclearfix */
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; visibility: hidden; }
 .clearfix:after { clear: both; }
+/* fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
 .clearfix { zoom: 1; }
+
+
+
+/*
+ * media queries for responsive design
+ * these follow after primary styles so they will successfully override.
+ */
+@media screen and (max-width: 1280px) {
+	#Bookmarklet, #GitHub {
+		float: right;
+		margin: 0 3em 0;
+	}
+	
+	#container {
+		padding: 0;
+		width: 40em;
+	}
+	
+	header, section {
+		margin: 0 0 3em 0;
+	}	
+}
+
+@media screen and (max-width: 750px) {
+	body, button, input, table td, table th, input, textarea {
+		font-size: 12px;
+	}
+}
+
+
+@media print {
+  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important;
+  -ms-filter: none !important; } /* black prints faster: sanbeiji.com/archives/953 */
+  a, a:visited { color: #444 !important; text-decoration: underline; }
+  a[href]:after { content: " (" attr(href) ")"; }
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* don't show links for images, or javascript/internal links */
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; } /* css-discuss.incutio.com/wiki/Printing_Tables */
+  tr, img { page-break-inside: avoid; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3{ page-break-after: avoid; }
+}
