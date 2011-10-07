@@ -10,6 +10,12 @@ describe('CYRIN', function() {
 		});
 	});
 	
+	describe('findDPI', function() {
+		it('returns a number for findDPI', function() {
+			expect(jQuery.CYRIN.findDPI()).toBeANumber();
+		});
+	})
+	
 	
 	describe('Input Types', function() {	
 		it('returns an error message when no target is supplied', function() {

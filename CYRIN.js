@@ -48,29 +48,28 @@
             base.options = $.extend({}, $.CYRIN.defaultOptions, options);
         };
 
-		$.CYRIN.findDPI = function () {
-			if(dpi) return dpi;
-
-			var scale = $('<div />', {
-				css: {
-					position: 'absolute',
-					width: '1in'
-				}
-			}).appendTo(document.body);
-
-			dpi = scale.width();
-
-			scale.remove();
-
-			return dpi;
-		};
-
         base.init();
     };
 
     $.CYRIN.defaultOptions = {};
 	$.extend($.CYRIN, constants);
 	$.CYRIN.version = '0.2.1';
+	$.CYRIN.findDPI = function () {
+		if(this.dpi) return this.dpi;
+
+		var scale = $('<div />', {
+			css: {
+				position: 'absolute',
+				width: '1in'
+			}
+		}).appendTo(document.body);
+
+		this.dpi = scale.width();
+
+		scale.remove();
+
+		return this.dpi;
+	};
 
 
     $.fn.CYRIN = function(radius, options){
