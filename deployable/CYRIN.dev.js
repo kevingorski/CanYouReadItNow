@@ -1817,7 +1817,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
             base.options = $.extend({}, $.CYRIN.defaultOptions, options);
         };
 
-		base.findDPI = function () {
+		$.CYRIN.findDPI = function () {
 			if(dpi) return dpi;
 
 			var scale = $('<div />', {
@@ -1839,7 +1839,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
 
     $.CYRIN.defaultOptions = {};
 	$.extend($.CYRIN, constants);
-	$.CYRIN.version = '0.2.0';
+	$.CYRIN.version = '0.2.1';
 
 
     $.fn.CYRIN = function(radius, options){
@@ -1851,7 +1851,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
 		};
 
 		function getPointsFromFontSize(fontSize) {
-			var dpi = plugin.findDPI(),
+			var dpi = $.CYRIN.findDPI(),
 				fontSizeInPixels = getPixelsFromFontSize(fontSize),
 				pixelsPerPoint = dpi / 72.0;
 

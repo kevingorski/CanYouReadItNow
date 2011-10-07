@@ -48,7 +48,7 @@
             base.options = $.extend({}, $.CYRIN.defaultOptions, options);
         };
 
-		base.findDPI = function () {
+		$.CYRIN.findDPI = function () {
 			if(dpi) return dpi;
 
 			var scale = $('<div />', {
@@ -70,7 +70,7 @@
 
     $.CYRIN.defaultOptions = {};
 	$.extend($.CYRIN, constants);
-	$.CYRIN.version = '0.2.0';
+	$.CYRIN.version = '0.2.1';
 
 
     $.fn.CYRIN = function(radius, options){
@@ -82,7 +82,7 @@
 		};
 
 		function getPointsFromFontSize(fontSize) {
-			var dpi = plugin.findDPI(),
+			var dpi = $.CYRIN.findDPI(),
 				fontSizeInPixels = getPixelsFromFontSize(fontSize),
 				pixelsPerPoint = dpi / 72.0;
 
