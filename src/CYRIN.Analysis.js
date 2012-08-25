@@ -1,6 +1,6 @@
-if(typeof CYRIN == 'undefined') var CYRIN = {};
+if(!window.CYRIN) { var CYRIN = {}; }
 
-if(typeof CYRIN.Analysis == 'undefined') {
+if(!CYRIN.Analysis) {
 
 	CYRIN.Analysis = function (textTreeNode) {
 		this.score = 0;
@@ -14,7 +14,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
 		this.children = [];
 
 		// Set a default score for everything so that it can be rolled up into this root analysis
-		if(!textTreeNode)
+		if(!textTreeNode) {
 			this.addScore(jQuery.CYRIN.FONT_SIZE, 0)
 				.addScore(jQuery.CYRIN.JUSTIFICATION, 0)
 				.addScore(jQuery.CYRIN.TEXT_COLOR_CONTRAST, 0)
@@ -22,7 +22,8 @@ if(typeof CYRIN.Analysis == 'undefined') {
 				.addScore(jQuery.CYRIN.LINE_LENGTH, 0)
 				.addScore(jQuery.CYRIN.PERCENTAGE_OF_TEXT_STYLIZED, 0)
 				.addScore(jQuery.CYRIN.MARGIN_AND_PADDING, 0);
-	}
+		}
+	};
 
 	CYRIN.Analysis.prototype.addMetric = function(name, value) {
 		this.metrics.push({
@@ -31,7 +32,7 @@ if(typeof CYRIN.Analysis == 'undefined') {
 		});
 
 		return this;
-	}
+	};
 
 	CYRIN.Analysis.prototype.addScore = function(name, value) {
 		this.scores.push({
@@ -43,25 +44,25 @@ if(typeof CYRIN.Analysis == 'undefined') {
 		this.totalPossible += 10;
 
 		return this;
-	}
+	};
 
 	CYRIN.Analysis.prototype.getAggregateScore = function(name) {
 		return jQuery.grep(this.aggregateScores, function(item) { return item.name === name; })[0].value;
-	}
+	};
 
 	CYRIN.Analysis.prototype.hasAggregateScore = function(name) {
 		return !!(jQuery.grep(this.aggregateScores, function(item) { return item.name === name; }).length);
-	}
+	};
 
 	CYRIN.Analysis.prototype.addToAggregate = function(name, value) {
 		jQuery.grep(
-			this.aggregateScores, 
+			this.aggregateScores,
 			function(item) { return item.name === name; })[0].value += value;
-	}
+	};
 
 	CYRIN.Analysis.prototype.addChild = function(child) {
 		this.children.push(child);
-	}
+	};
 
 	CYRIN.Analysis.prototype.sort = function() {
 		var compareNames = function(first, second) {
@@ -71,39 +72,39 @@ if(typeof CYRIN.Analysis == 'undefined') {
 		this.scores.sort(compareNames);
 		this.aggregateScores.sort(compareNames);
 		this.metrics.sort(compareNames);
-	}
+	};
 
 	CYRIN.Analysis.prototype.applyToAll = function(fn) {
 		fn(this);
 	
-		if(!this.children.length) return;
+		if(!this.children.length) {
+			return;
+		}
 	
 		for (var i = this.children.length - 1; i >= 0; i--){
 			this.children[i].applyToAll(fn);
-		};
-	}
+		}
+	};
 
 	CYRIN.Analysis.prototype.getMetric = function(name) {
 		var metricArray = jQuery.grep(this.metrics, function(item) { return item.name === name; });
 	
 		return metricArray && metricArray.length ? metricArray[0].value : false;
-	
-	}
+	};
 
 	CYRIN.Analysis.prototype.getScore = function(name) {
 		var score = jQuery.grep(this.scores, function(item) { return item.name === name; })[0];
 
 		return score.value;
-	}
+	};
 
 	CYRIN.Analysis.prototype.getAggregateScore = function(name) {
 		var score = jQuery.grep(this.aggregateScores, function(item) { return item.name === name; })[0];
 	
 		return score.value;
-	}
+	};
 
 	CYRIN.Analysis.prototype.rollUp = function() {
-	
 		function roundToTenth(value) {
 			return Math.round(value * 10) / 10;
 		}
@@ -123,11 +124,11 @@ if(typeof CYRIN.Analysis == 'undefined') {
 				currentAnalysis.aggregateScores = jQuery.map(
 					currentAnalysis.scores,
 					function(item) {
-						return { 
-							name: item.name, 
+						return {
+							name: item.name,
 							value : item.value * directCharacterCount / currentAnalysis.totalCharacterCount,
 							description : item.description
-						}
+						};
 					}
 				);
 			}
@@ -172,5 +173,5 @@ if(typeof CYRIN.Analysis == 'undefined') {
 		this.sort();
 
 		return this.totalCharacterCount;
-	}
+	};
 }

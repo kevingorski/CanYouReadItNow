@@ -1,10 +1,14 @@
-//
-//	Can You Read It Now?
-//		by Kevin Gorski
-//		Analyze target DOM element for visual readability in the context of the current page.
-// 
-//	Dependencies
-//		Color - https://github.com/harthur/color
+/*
+ * Can You Read It Now?
+ * Analyze target DOM element for visual readability in the context of the current page.
+ * http://kevingorski.github.com/CanYouReadItNow
+ *
+ * Dependencies
+ *   Color - https://github.com/harthur/color
+ *
+ * By Kevin Gorski
+ * Licensed under the MIT license.
+*/
 
 (function($){
 	var constants = {
@@ -55,7 +59,9 @@
 	$.extend($.CYRIN, constants);
 	$.CYRIN.version = '0.2.1';
 	$.CYRIN.findDPI = function () {
-		if(this.dpi) return this.dpi;
+		if(this.dpi) {
+			return this.dpi;
+		}
 
 		var scale = $('<div />', {
 			css: {
@@ -78,7 +84,7 @@
 		function getPixelsFromFontSize(fontSize) {
 			// jQuery will always return in pixels
 			return parseFloat(/(\d*\.*\d*)/.exec(fontSize)[0]);
-		};
+		}
 
 		function getPointsFromFontSize(fontSize) {
 			var dpi = $.CYRIN.findDPI(),
@@ -86,19 +92,17 @@
 				pixelsPerPoint = dpi / 72.0;
 
 			return fontSizeInPixels / pixelsPerPoint;
-		};
+		}
 
 		function isContentBold(target) {
 			return (target.css('font-weight') + '').match(/^bold.*|[7-9]00/) || target[0].nodeName.match(/strong/i);
-		};
+		}
 
 		function getTextWidth(target) {
 			var elementWidth = target.width(),
 				columnCount;
 
-			if((columnCount = target.css('column-count') || target.css('-webkit-column-count') || target.css('-moz-column-count'))
-				!== 'auto' && columnCount > 1)
-			{
+			if((columnCount = target.css('column-count') || target.css('-webkit-column-count') || target.css('-moz-column-count')) !== 'auto' && columnCount > 1) {
 				var columnGap = getPixelsFromFontSize(
 					target.css('column-gap') ||
 					target.css('-webkit-column-gap') ||
@@ -108,24 +112,29 @@
 			}
 
 			return elementWidth;
-		};
+		}
 
 		function standardizeColor(stringColor) {
-			if(!stringColor) return false;
+			if(!stringColor) {
+				return false;
+			}
 			
-			var color = Color(stringColor);
+			var color = new Color(stringColor);
 			
-			if(color.alpha() === 0) return false;
+			if(color.alpha() === 0) {
+				return false;
+			}
 			
 			return color.hexString();
-		};
+		}
 
 		function calculateContrastRatio(backgroundColor, textColor) {
-			if(!(backgroundColor && textColor)) return false;
+			if(!(backgroundColor && textColor)){ 
+				return false;
+			}
 
-			return Color(textColor).contrast(Color(backgroundColor));
-		};
-
+			return new Color(textColor).contrast(new Color(backgroundColor));
+		}
 
 		function buildTextTree(target) {
 			// target will be a jQuery set
@@ -136,18 +145,21 @@
 				childTextNodes = [];
 
 			// Node.TEXT_NODE, not available in IE
-			if(node.nodeType === 3)
+			if(node.nodeType === 3) {
 				return new CYRIN.TextTreeNode(node);
+			}
 			
 			$.each(childNodes, function() {
 				// No comments or other element types that don't display text
-				if(this.nodeType === 8 
-					|| this.nodeName.match(/IMG|BR|SCRIPT|STYLE/))
+				if(this.nodeType === 8 || this.nodeName.match(/IMG|BR|SCRIPT|STYLE/)) {
 					return;
+				}
 
 				if(this.nodeType === 3) {
 					// Ignore all white-space text nodes
-					if(this.nodeValue.match(/^\s+$/)) return;
+					if(this.nodeValue.match(/^\s+$/)) {
+						return;
+					}
 
 					childTextNodes.push(this);
 
@@ -158,7 +170,7 @@
 			});
 
 			return new CYRIN.TextTreeNode(node, childTextTreeNodes, childTextNodes);
-		};
+		}
 
 		function decorateTreeWithMeasurements(textTreeNode, defaultBackgroundColor, parentTreeNode) {
 			var target = $(textTreeNode.DOMNode),
@@ -211,21 +223,20 @@
 				
 				textTreeNode
 					.addMetric(constants.MARGIN_AND_PADDING,
-						marginAndPadding = getPixelsFromFontSize(margin) + getPixelsFromFontSize(padding))
+						marginAndPadding = getPixelsFromFontSize(margin) + getPixelsFromFontSize(padding));
 
 				// If the parent appears contiguous with this element,
 				// add its effective M&P to the current M&P
 				textTreeNode.addMetric(constants.EFFECTIVE_MARGIN_AND_PADDING,
-					(parentTreeNode
-						&& backgroundColor === parentTreeNode.getMetric(constants.BACKGROUND_COLOR))
+					(parentTreeNode && backgroundColor === parentTreeNode.getMetric(constants.BACKGROUND_COLOR))
 						? marginAndPadding + (parentTreeNode.getMetric(constants.EFFECTIVE_MARGIN_AND_PADDING) || 0)
 						: marginAndPadding);
 				
 
 				// Shorcut for small blocks of text to avoid costly DOM manipulation
-				if(textLength < 80)
+				if(textLength < 80) {
 					textTreeNode.addMetric(constants.CHARACTERS_PER_LINE, 80);
-				else {
+				} else {
 					var clone = target.clone();
 
 					clone.html('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&nbsp;');
@@ -240,49 +251,47 @@
 				}
 			}
 			
-			if(backgroundColor) defaultBackgroundColor = backgroundColor;
+			if(backgroundColor) {
+				defaultBackgroundColor = backgroundColor;
+			}
 
-			if(textTreeNode.textTreeChildren)
+			if(textTreeNode.textTreeChildren) {
 				$.each(textTreeNode.textTreeChildren, function() {
 					decorateTreeWithMeasurements(this, defaultBackgroundColor, textTreeNode);
 				});
-		};
+			}
+		}
 
 		function analyzeFontSize(textTreeNode, analysis) {
 			var key = constants.FONT_SIZE,
 				fontSizeInPoints = getPointsFromFontSize(textTreeNode.getMetric(key)),
 				offsetFromIdeal = 12 - fontSizeInPoints,
-				score = offsetFromIdeal < 0
-					? 10
-					: Math.max(10 - offsetFromIdeal * 2, 0);
+				score = offsetFromIdeal < 0 ? 10 : Math.max(10 - offsetFromIdeal * 2, 0);
 
 			analysis.addScore(key, roundToTenth(score));
-		};
+		}
 
 		function analyzeJustification(textTreeNode, analysis) {
 			var key = constants.JUSTIFICATION;
 
 			analysis.addScore(key,
 				textTreeNode.getMetric(key).match(/left|start|\-webkit\-auto/) ? 10 : 0);
-		};
+		}
 
 		function analyzeColorContrast(textTreeNode, analysis) {
 			// 1.4.6 Contrast (Enhanced)
 			var colorContrastRatio = textTreeNode.getMetric(constants.TEXT_COLOR_CONTRAST),
 				fontSize = textTreeNode.getMetric(constants.FONT_SIZE),
-				score;
 
-			// For "normal" text, 7 is considered excellent
-			// For "large scale text," (at least 18 point or 14 point bold), 4.5 is excellent
-			score = Math.floor(colorContrastRatio * 
-				(fontSize >= getPointsFromFontSize(18)
-					|| (fontSize >= getPointsFromFontSize(14) && isContentBold(target)) 
-					? .45 : .7));
+				// For "normal" text, 7 is considered excellent
+				// For "large scale text," (at least 18 point or 14 point bold), 4.5 is excellent
+				contrastTarget = (fontSize >= getPointsFromFontSize(18) || (fontSize >= getPointsFromFontSize(14) && isContentBold(jQuery(textTreeNode.DOMNode))) ? 0.45 : 0.7),
+				score = Math.floor(colorContrastRatio * contrastTarget);
 
 			analysis.addScore(
 				constants.TEXT_COLOR_CONTRAST,
 				Math.min(10, score));
-		};
+		}
 
 		function analyzeLeading(textTreeNode, analysis) {
 			// Visual Presentation SC 1.4.8
@@ -295,30 +304,38 @@
 				lineLeadingScore = Math.min(10 * (1 - (Math.abs(idealOffset) / fontSizeInPixels)), 10);
 
 			analysis.addScore(key, roundToTenth(lineLeadingScore));
-		};
+		}
 
 		function analyzeStylizedText(textTreeNode, analysis) {
 			analysis.addScore(
 				constants.PERCENTAGE_OF_TEXT_STYLIZED,
 				textTreeNode.getMetric(constants.STYLIZED_TEXT) ? 0 : 10);
-		};
+		}
 
 		function analyzeLineLength(textTreeNode, analysis) {
-			if(!textTreeNode.getMetric(constants.BLOCK_ELEMENT)) return;
+			if(!textTreeNode.getMetric(constants.BLOCK_ELEMENT)) {
+				return;
+			}
 
 			// Visual Presentation SC 1.4.8
 			var charactersPerLine = textTreeNode.getMetric(constants.CHARACTERS_PER_LINE),
 				offsetFromIdealCPL = charactersPerLine - 80,
 				absOffset = Math.abs(offsetFromIdealCPL),
-				score = (offsetFromIdealCPL > 0)
-					? Math.max((10 - Math.round(absOffset / 5)), 0)
-					: Math.min(Math.max((10 - Math.round((absOffset - 10) / 10)), 0), 10);
+				score;
+
+			if(offsetFromIdealCPL > 0) {
+				score = Math.max((10 - Math.round(absOffset / 5)), 0);
+			} else {
+				score = Math.min(Math.max((10 - Math.round((absOffset - 10) / 10)), 0), 10);
+			}
 
 			analysis.addScore(constants.LINE_LENGTH, roundToTenth(score));
-		};
+		}
 
 		function analyzeMarginAndPadding(textTreeNode, analysis) {
-			if(!textTreeNode.getMetric(constants.BLOCK_ELEMENT)) return;
+			if(!textTreeNode.getMetric(constants.BLOCK_ELEMENT)) {
+				return;
+			}
 
 			// What we're really interested in here is separation between the text and 
 			// the next visual element, so if the background is similar enough to appear
@@ -330,15 +347,16 @@
 				score = Math.min(10, 10 * marginAndPadding / fontSizeInPixels);
 
 			analysis.addScore(constants.MARGIN_AND_PADDING, score);
-		};
+		}
 
 		function analyzeTextTree(textTree, parentNode) {
 			var analysis = new CYRIN.Analysis(textTree);
 
-			if(!textTree.getMetric(constants.BACKGROUND_COLOR))
+			if(!textTree.getMetric(constants.BACKGROUND_COLOR)) {
 				textTree.updateMetric(
 					constants.BACKGROUND_COLOR,
 					parentNode.getMetric(constants.BACKGROUND_COLOR));
+			}
 
 			if(textTree.textChildren && textTree.textChildren.length) {
 				analyzeFontSize(textTree, analysis);
@@ -361,20 +379,25 @@
 					.addScore(constants.MARGIN_AND_PADDING, 0);
 			}
 
-			if(textTree.textTreeChildren)
+			if(textTree.textTreeChildren) {
 				$.each(textTree.textTreeChildren, function() {
 					analysis.addChild(analyzeTextTree(this, textTree));
 				});
+			}
 			
 			textTree.releaseDOMNode();
 
 			return analysis;
-		}		
+		}
 
-		if(!(plugin.el && plugin.el.length)) return 'Provide a target to analyze.';
+		if(!(plugin.el && plugin.el.length)) {
+			return 'Provide a target to analyze.';
+		}
 
 		// Non-intuitive work-around for jQuery/FireFox error from jQuery.contains() with a jQuery object (http://bugs.jquery.com/ticket/7297)
-		if($(plugin.el, plugin.options.context).size() == 0) return 'Target doesn\'t appear to be in the DOM.';
+		if($(plugin.el, plugin.options.context).size() === 0) {
+			return 'Target doesn\'t appear to be in the DOM.';
+		}
 
 		var overallScore = 0,
 			totalPossible = 0,
@@ -394,9 +417,7 @@
 				// Find a background color on a parent node, or white by default
 				var backgroundTarget = currentTarget;
 			
-				while(backgroundTarget 
-					&& backgroundTarget[0] !== document
-					&& !(defaultBackgroundColor = standardizeColor(backgroundTarget.css('background-color')))){
+				while(backgroundTarget && backgroundTarget[0] !== document && !(defaultBackgroundColor = standardizeColor(backgroundTarget.css('background-color')))) {
 					backgroundTarget = backgroundTarget.parent();
 				}
 
@@ -406,15 +427,15 @@
 
 			rootParent = currentTarget.parent();
 
-			while(rootParent[0].nodeType != 9 // DOCUMENT_NODE
-			 	&& rootParent.css('display') === 'block') {
-
+			// 9 is DOCUMENT_NODE
+			while(rootParent[0].nodeType !== 9 && rootParent.css('display') === 'block') {
 				var margin = rootParent.css('margin-left') || 0;
 
 				effectiveMarginAndPadding += getPixelsFromFontSize(rootParent.css('padding-left') || 0);
 
-				if(margin === 'auto')
+				if(margin === 'auto') {
 					margin = (rootParent.outerWidth(true) - rootParent.outerWidth()) / 2;
+				}
 
 				effectiveMarginAndPadding += getPixelsFromFontSize(margin);
 
@@ -435,4 +456,4 @@
 		return rootAnalysis;
     };
 
-})(jQuery);
+}(jQuery));

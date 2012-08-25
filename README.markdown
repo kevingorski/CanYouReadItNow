@@ -30,6 +30,8 @@ The metrics and scores output by CYRIN are usually pretty reasonable, but:
 ##Contributing
 Contributions are readily accepted with good example specs and changes to fulfill them.
 
-* Install [UglifyJS](https://github.com/mishoo/UglifyJS) for minification
-* Make sure to load the SpecRunner page in at least one browser before considering any changes complete.
-* Running the build script will update the development and minified versions in /deployable
+* Install [PhantomJS](http://phantomjs.org/): `brew install phantomjs` (homebrew on OSX, other platforms see homepage)
+* Install [Grunt](https://github.com/cowboy/grunt/): `npm install -g grunt`
+* Install [Grunt-Jasmine-Task](https://github.com/creynders/grunt-jasmine-task): `npm install` (`package.json` identifies the correct version)
+* Running `grunt` in the root project directory will lint the source, run the Jasmine specs, and update the development and minified versions in `/deployable`. Make sure this process succeeds before making a pull request.
+* For browser-specific issues, open `test/SpecRunner.html` in that browser and see where things went wrong.

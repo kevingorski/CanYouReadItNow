@@ -1,0 +1,13 @@
+{
+  "name": "jquery-plugin",
+  "version": "0.0.0-ignored",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "scripts": {
+    "test": "grunt jasmine"
+  },
+  "dependencies": {
+    "grunt-jasmine-task": "0.2.2"
+  }
+}

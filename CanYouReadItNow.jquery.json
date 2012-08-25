@@ -1,0 +1,29 @@
+{
+  "name": "CanYouReadItNow",
+  "title": "CanYouReadItNow",
+  "description": "Analyzes visual readability of text in the DOM",
+  "version": "0.2.1",
+  "homepage": "http://kevingorski.github.com/CanYouReadItNow",
+  "author": {
+    "name": "Kevin Gorski",
+    "email": "kevin.gorski@gmail.com",
+    "url": "http://kevingorski.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kevingorski/CanYouReadItNow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kevingorski/CanYouReadItNow/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/kevingorski/CanYouReadItNow/blob/master/LICENSE.markdown"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">= 1.6"
+  },
+  "keywords": []
+}
