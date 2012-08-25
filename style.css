@@ -215,24 +215,19 @@ header .description {
 	text-align: right;
 }
 
-section.Introduction {
 	
+#container {
+	padding: 0;
+	width: 40em;
 }
 
-#Examples {
-	float: left;
-	list-style: none;
-	width: 100%;
-}
-#Examples li { 
-	float: left;
-	width: 14em;
-}
-#Examples li ul li { 
-	float: none; 
+header, section {
+	margin: 0 0 3em 0;
 }
 
-
+footer p {
+	text-align: center;
+}
 
 
 /*
@@ -265,21 +260,6 @@ section.Introduction {
  * media queries for responsive design
  * these follow after primary styles so they will successfully override.
  */
-@media screen and (max-width: 1280px) {
-	#Bookmarklet, #GitHub {
-		float: right;
-		margin: 0 3em 0;
-	}
-	
-	#container {
-		padding: 0;
-		width: 40em;
-	}
-	
-	header, section {
-		margin: 0 0 3em 0;
-	}	
-}
 
 @media screen and (max-width: 750px) {
 	body, button, input, table td, table th, input, textarea {
